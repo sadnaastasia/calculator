@@ -1,0 +1,36 @@
+.App {
+  margin: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.calculator {
+  width: 30%;
+  height: 80vh;
+  border: 1px solid black;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  background-color: #dc9fd6;
+  border: 1px solid purple;
+}
+
+.pad {
+  display: grid;
+  grid-template-columns: 4fr 2fr;
+  height: 100%;
+}
+
+.func-pad {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 20px;
+  gap: 10px;
+}
+
+.number-pad {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 20px;
+  gap: 7px;
+}

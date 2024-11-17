@@ -1,0 +1,13 @@
+.buttonNumber {
+  border: 1px solid purple;
+  background-color: #c05dbd;
+  border-radius: 25px;
+  color: purple;
+  font-size: large;
+  font-weight: 600;
+}
+
+.buttonNumber:hover {
+  background-color: #b35dc0;
+  cursor: pointer;
+}

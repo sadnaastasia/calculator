@@ -1,0 +1,13 @@
+.buttonDoMath {
+  border: 1px solid purple;
+  background-color: #5d7cc0;
+  border-radius: 25px;
+  color: #ec60e0;
+  font-size: large;
+  font-weight: 600;
+}
+
+.buttonDoMath:hover {
+  background-color: #5f8ebe;
+  cursor: pointer;
+}

@@ -1,0 +1,22 @@
+.containerDisplay {
+  padding: 20px;
+  height: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.display {
+  width: 100%;
+  height: 60%;
+  border: 1px solid black;
+  border-radius: 20px;
+  border: 1px solid purple;
+  background-color: #d8dce5;
+  font-size: xx-large;
+  font-weight: 800;
+  color: #5d6dc0;
+  padding: 20px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
