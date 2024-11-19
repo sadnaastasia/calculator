@@ -28,9 +28,15 @@
   gap: 10px;
 }
 
+.number-CE-pad {
+  display: grid;
+  grid-template-rows: 1fr 4fr;
+  padding: 20px;
+  gap: 10px;
+}
+
 .number-pad {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  padding: 20px;
   gap: 7px;
 }

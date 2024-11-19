@@ -7,6 +7,16 @@
   font-weight: 600;
 }
 
+.buttonZero {
+  border: 1px solid purple;
+  background-color: #c05dbd;
+  border-radius: 25px;
+  color: purple;
+  font-size: large;
+  font-weight: 600;
+  grid-column: 1/3;
+}
+
 .buttonNumber:hover {
   background-color: #b35dc0;
   cursor: pointer;

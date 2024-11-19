@@ -1,0 +1,13 @@
+.buttonCE {
+  border: 1px solid purple;
+  background-color: #83619e;
+  border-radius: 25px;
+  color: #bfdbf4;
+  font-size: xx-large;
+  font-weight: 800;
+}
+
+.buttonCE:hover {
+  background-color: #845aa5;
+  cursor: pointer;
+}
