@@ -1,8 +1,12 @@
+import { useContext } from 'react';
 import './Display.css';
+import { CalcContext } from '../../App';
+
 export default function Display() {
+  const { number } = useContext(CalcContext);
   return (
     <div className="containerDisplay">
-      <h2 className="display">0</h2>
+      <h2 className="display">{number}</h2>
     </div>
   );
 }

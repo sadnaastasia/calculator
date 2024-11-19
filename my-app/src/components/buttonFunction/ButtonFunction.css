@@ -11,3 +11,8 @@
   background-color: #d0d4df;
   cursor: pointer;
 }
+
+.buttonFunction:focus {
+  background-color: #98a1b9;
+  cursor: pointer;
+}
