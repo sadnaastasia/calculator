@@ -42,9 +42,8 @@ function App() {
       case '+':
         setNumber(
           `${
-            Math.round(
-              `${(parseFloat(storedNumber) + parseFloat(number)) * 100}`
-            ) / 100
+            Math.round((parseFloat(storedNumber) + parseFloat(number)) * 100) /
+            100
           }`
         );
         break;
@@ -52,9 +51,8 @@ function App() {
       case '-':
         setNumber(
           `${
-            Math.round(
-              `${(parseFloat(storedNumber) - parseFloat(number)) * 100}`
-            ) / 100
+            Math.round((parseFloat(storedNumber) - parseFloat(number)) * 100) /
+            100
           }`
         );
         break;
@@ -62,9 +60,8 @@ function App() {
       case '/':
         setNumber(
           `${
-            Math.round(
-              `${(parseFloat(storedNumber) / parseFloat(number)) * 100}`
-            ) / 100
+            Math.round((parseFloat(storedNumber) / parseFloat(number)) * 100) /
+            100
           }`
         );
         break;
@@ -72,9 +69,8 @@ function App() {
       case '*':
         setNumber(
           `${
-            Math.round(
-              `${parseFloat(storedNumber) * parseFloat(number) * 100}`
-            ) / 100
+            Math.round(parseFloat(storedNumber) * parseFloat(number) * 100) /
+            100
           }`
         );
         break;
