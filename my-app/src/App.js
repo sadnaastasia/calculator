@@ -12,28 +12,90 @@ function App() {
   const [number, setNumber] = useState('0');
   const [storedNumber, setStoredNumber] = useState('');
   const [functionType, setFunctionType] = useState('');
+  const [buttonFunctionTypeFocused, setbuttonFunctionTypeFocused] =
+    useState(false);
   const handleSetDisplayValue = (num) => {
-    if (storedNumber) setNumber('');
-    if (!number.includes('.') && num !== '.') {
-      setNumber(`${(number + num).replace(/^0+/, '')}`);
+    if ((storedNumber, functionType, buttonFunctionTypeFocused)) {
+      if (num !== '.') {
+        setNumber(num);
+      } else {
+        setNumber(`${'0' + num}`);
+      }
+      setbuttonFunctionTypeFocused(false);
     } else {
-      setNumber(`${number + num}`);
+      if (!number.includes('.') && num !== '.') {
+        setNumber(`${(number + num).replace(/^0+/, '')}`);
+      } else {
+        setNumber(`${number + num}`);
+      }
     }
   };
   const handleFunctionType = (type) => {
     if (number) {
       setStoredNumber(number);
       setFunctionType(type);
+      setbuttonFunctionTypeFocused(true);
     }
   };
+  const handleDoMath = () => {
+    switch (functionType) {
+      case '+':
+        setNumber(
+          `${
+            Math.round(
+              `${(parseFloat(storedNumber) + parseFloat(number)) * 100}`
+            ) / 100
+          }`
+        );
+        break;
+
+      case '-':
+        setNumber(
+          `${
+            Math.round(
+              `${(parseFloat(storedNumber) - parseFloat(number)) * 100}`
+            ) / 100
+          }`
+        );
+        break;
+
+      case '/':
+        setNumber(
+          `${
+            Math.round(
+              `${(parseFloat(storedNumber) / parseFloat(number)) * 100}`
+            ) / 100
+          }`
+        );
+        break;
+
+      case '*':
+        setNumber(
+          `${
+            Math.round(
+              `${parseFloat(storedNumber) * parseFloat(number) * 100}`
+            ) / 100
+          }`
+        );
+        break;
+
+      default:
+        break;
+    }
+  };
+
   return (
     <CalcContext.Provider
       value={{
         number,
+        storedNumber,
+        functionType,
+        setNumber,
         handleSetDisplayValue,
         setStoredNumber,
         setFunctionType,
         handleFunctionType,
+        handleDoMath,
       }}
     >
       <div className="App">

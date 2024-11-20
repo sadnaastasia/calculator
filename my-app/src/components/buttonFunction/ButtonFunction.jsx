@@ -8,7 +8,7 @@ export default function ButtonFunction() {
     return (
       <button
         key={func}
-        onClick={(e, func) => {
+        onClick={(e) => {
           handleFunctionType(func);
           e.target.focus();
         }}
