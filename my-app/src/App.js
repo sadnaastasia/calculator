@@ -23,8 +23,10 @@ function App() {
       }
       setbuttonFunctionTypeFocused(false);
     } else {
-      if (!number.includes('.') && num !== '.') {
+      if (!number.includes('.') && num !== '.' && num !== '0') {
         setNumber(`${(number + num).replace(/^0+/, '')}`);
+      } else if (num === '0' && number === '0') {
+        setNumber('0');
       } else {
         setNumber(`${number + num}`);
       }
@@ -42,8 +44,9 @@ function App() {
       case '+':
         setNumber(
           `${
-            Math.round((parseFloat(storedNumber) + parseFloat(number)) * 100) /
-            100
+            Math.round(
+              (parseFloat(storedNumber) + parseFloat(number)) * 100000000
+            ) / 100000000
           }`
         );
         break;
@@ -51,8 +54,9 @@ function App() {
       case '-':
         setNumber(
           `${
-            Math.round((parseFloat(storedNumber) - parseFloat(number)) * 100) /
-            100
+            Math.round(
+              (parseFloat(storedNumber) - parseFloat(number)) * 100000000
+            ) / 100000000
           }`
         );
         break;
@@ -60,8 +64,9 @@ function App() {
       case '/':
         setNumber(
           `${
-            Math.round((parseFloat(storedNumber) / parseFloat(number)) * 100) /
-            100
+            Math.round(
+              (parseFloat(storedNumber) / parseFloat(number)) * 100000000
+            ) / 100000000
           }`
         );
         break;
@@ -69,8 +74,9 @@ function App() {
       case '*':
         setNumber(
           `${
-            Math.round(parseFloat(storedNumber) * parseFloat(number) * 100) /
-            100
+            Math.round(
+              parseFloat(storedNumber) * parseFloat(number) * 100000000
+            ) / 100000000
           }`
         );
         break;
