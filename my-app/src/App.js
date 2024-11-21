@@ -3,7 +3,7 @@ import Display from './components/display/Display.jsx';
 import ButtonNumber from './components/buttonNumber/ButtonNumber.jsx';
 import ButtonFunction from './components/buttonFunction/ButtonFunction.jsx';
 import ButtonDoMath from './components/buttonDoMath/ButtonDoMath.jsx';
-import ButtonCE from './components/buttonCE/ButtonCE.jsx';
+import ButtonDelete from './components/buttonCE/ButtonDelete.jsx';
 import { createContext, useState } from 'react';
 
 export const CalcContext = createContext();
@@ -85,6 +85,14 @@ function App() {
         break;
     }
   };
+  const handleCEOperation = () => {
+    setNumber('0');
+  };
+  const handleCOperation = () => {
+    setNumber('0');
+    setStoredNumber('');
+    setFunctionType('');
+  };
 
   return (
     <CalcContext.Provider
@@ -93,11 +101,13 @@ function App() {
         storedNumber,
         functionType,
         setNumber,
-        handleSetDisplayValue,
         setStoredNumber,
         setFunctionType,
+        handleSetDisplayValue,
         handleFunctionType,
         handleDoMath,
+        handleCEOperation,
+        handleCOperation,
       }}
     >
       <div className="App">
@@ -105,7 +115,7 @@ function App() {
           <Display />
           <div className="pad">
             <div className="number-CE-pad">
-              <ButtonCE />
+              <ButtonDelete />
               <div className="number-pad">
                 <ButtonNumber />
               </div>
