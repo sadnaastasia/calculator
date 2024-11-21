@@ -16,7 +16,8 @@ function App() {
   const [buttonFunctionTypeFocused, setButtonFunctionTypeFocused] =
     useState(false);
 
-  const buttonFunction = useRef('initial');
+  const buttonFunction = useRef('');
+  const buttonNumber = useRef('');
 
   const handleSetDisplayValue = (num) => {
     if (storedNumber && functionType && buttonFunctionTypeFocused) {
@@ -39,11 +40,14 @@ function App() {
 
   const handleFunctionType = (type) => {
     if (number && !storedNumber) {
+      buttonNumber.current = '';
       setStoredNumber(number);
       setFunctionType(type);
       setButtonFunctionTypeFocused(true);
     } else if (number && storedNumber) {
-      handleDoMath();
+      if (buttonNumber.current && !buttonFunction.current) {
+        handleDoMath();
+      }
       setFunctionType(type);
       setButtonFunctionTypeFocused(true);
       setResultChange(!resultChange);
@@ -110,13 +114,19 @@ function App() {
 
   const handleCEOperation = () => {
     setNumber('0');
-    buttonFunction.current.focus();
+    if (buttonFunction.current) {
+      buttonFunction.current.focus();
+    }
   };
 
   const handleCOperation = () => {
     setNumber('0');
     setStoredNumber('');
     setFunctionType('');
+    if (buttonFunction.current) {
+      buttonFunction.current.blur();
+    }
+    buttonFunction.current = '';
   };
 
   return (
@@ -126,6 +136,7 @@ function App() {
         storedNumber,
         functionType,
         buttonFunction,
+        buttonNumber,
         setNumber,
         setStoredNumber,
         setFunctionType,
