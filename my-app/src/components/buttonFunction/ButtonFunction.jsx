@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { CalcContext } from '../../App';
 import './ButtonFunction.css';
 export default function ButtonFunction() {
-  const { handleFunctionType } = useContext(CalcContext);
+  const { handleFunctionType, buttonFunction } = useContext(CalcContext);
 
   const funcs = ['/', '*', '-', '+'].map((func) => {
     return (
@@ -11,6 +11,7 @@ export default function ButtonFunction() {
         onClick={(e) => {
           handleFunctionType(func);
           e.target.focus();
+          buttonFunction.current = e.target;
         }}
         className="buttonFunction"
       >

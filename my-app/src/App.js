@@ -16,6 +16,8 @@ function App() {
   const [buttonFunctionTypeFocused, setButtonFunctionTypeFocused] =
     useState(false);
 
+  const buttonFunction = useRef('initial');
+
   const handleSetDisplayValue = (num) => {
     if (storedNumber && functionType && buttonFunctionTypeFocused) {
       if (num !== '.') {
@@ -108,6 +110,7 @@ function App() {
 
   const handleCEOperation = () => {
     setNumber('0');
+    buttonFunction.current.focus();
   };
 
   const handleCOperation = () => {
@@ -122,6 +125,7 @@ function App() {
         number,
         storedNumber,
         functionType,
+        buttonFunction,
         setNumber,
         setStoredNumber,
         setFunctionType,
