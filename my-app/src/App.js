@@ -45,7 +45,7 @@ function App() {
       setFunctionType(type);
       setButtonFunctionTypeFocused(true);
     } else if (number && storedNumber) {
-      if (buttonNumber.current && !buttonFunction.current) {
+      if (buttonNumber.current === buttonFunction.current) {
         handleDoMath();
       }
       setFunctionType(type);
