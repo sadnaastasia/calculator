@@ -4,24 +4,26 @@ import ButtonNumber from './components/buttonNumber/ButtonNumber.jsx';
 import ButtonFunction from './components/buttonFunction/ButtonFunction.jsx';
 import ButtonDoMath from './components/buttonDoMath/ButtonDoMath.jsx';
 import ButtonDelete from './components/buttonCE/ButtonDelete.jsx';
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState, useRef } from 'react';
 
 export const CalcContext = createContext();
 
 function App() {
   const [number, setNumber] = useState('0');
   const [storedNumber, setStoredNumber] = useState('');
+  const [resultChange, setResultChange] = useState('false');
   const [functionType, setFunctionType] = useState('');
-  const [buttonFunctionTypeFocused, setbuttonFunctionTypeFocused] =
+  const [buttonFunctionTypeFocused, setButtonFunctionTypeFocused] =
     useState(false);
+
   const handleSetDisplayValue = (num) => {
-    if ((storedNumber, functionType, buttonFunctionTypeFocused)) {
+    if (storedNumber && functionType && buttonFunctionTypeFocused) {
       if (num !== '.') {
         setNumber(num);
       } else {
         setNumber(`${'0' + num}`);
       }
-      setbuttonFunctionTypeFocused(false);
+      setButtonFunctionTypeFocused(false);
     } else {
       if (!number.includes('.') && num !== '.' && num !== '0') {
         setNumber(`${(number + num).replace(/^0+/, '')}`);
@@ -32,13 +34,30 @@ function App() {
       }
     }
   };
+
   const handleFunctionType = (type) => {
-    if (number) {
+    if (number && !storedNumber) {
       setStoredNumber(number);
       setFunctionType(type);
-      setbuttonFunctionTypeFocused(true);
+      setButtonFunctionTypeFocused(true);
+    } else if (number && storedNumber) {
+      handleDoMath();
+      setFunctionType(type);
+      setButtonFunctionTypeFocused(true);
+      setResultChange(!resultChange);
     }
   };
+
+  const firstRender = useRef(true);
+
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+    } else {
+      setStoredNumber(number);
+    }
+  }, [resultChange]);
+
   const handleDoMath = () => {
     switch (functionType) {
       case '+':
@@ -84,10 +103,13 @@ function App() {
       default:
         break;
     }
+    setStoredNumber('');
   };
+
   const handleCEOperation = () => {
     setNumber('0');
   };
+
   const handleCOperation = () => {
     setNumber('0');
     setStoredNumber('');
