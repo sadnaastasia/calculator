@@ -48,10 +48,10 @@ function App() {
       if (buttonNumber.current === buttonFunction.current) {
         handleDoMath();
         buttonNumber.current = '';
+        setResultChange(!resultChange);
       }
       setFunctionType(type);
       setButtonFunctionTypeFocused(true);
-      setResultChange(!resultChange);
     }
   };
 
@@ -116,6 +116,7 @@ function App() {
   const handleCEOperation = () => {
     setNumber('0');
     if (buttonFunction.current) {
+      buttonNumber.current = '';
       buttonFunction.current.focus();
     }
   };
