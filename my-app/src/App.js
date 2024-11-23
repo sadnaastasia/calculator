@@ -106,6 +106,15 @@ function App() {
         return;
         //processing division by "0"
       }
+      if (Number(number) > 99999999 || Number(storedNumber) > 99999999) {
+        setNumber('Calculator can process numbers ≤ 99 999 999');
+        setStoredNumber('');
+        setFunctionType('');
+        buttonFunction.current = '';
+        buttonNumber.current = '';
+        return;
+        //processing long numbers
+      }
       switch (functionType) {
         case '+':
           setNumber(
