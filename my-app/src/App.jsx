@@ -10,9 +10,9 @@ import { createContext, useEffect, useState, useRef } from 'react';
 export const CalcContext = createContext();
 
 function App() {
-  const [number, setNumber] = useState('0');
+  let [number, setNumber] = useState('0');
   //number on display
-  const [storedNumber, setStoredNumber] = useState('');
+  let [storedNumber, setStoredNumber] = useState('');
   //number in memory
   const [resultChange, setResultChange] = useState(false);
   //use this state for changing stored number after rendering
@@ -22,6 +22,9 @@ function App() {
   const [buttonFunctionTypeFocused, setButtonFunctionTypeFocused] =
     useState(false);
   //use this state for entering first number after clicking on buttonFunction
+  const [stringOnDisplay, setStringOnDisplay] = useState(false);
+  //use this state for disabling clicking on ButtonFunction when
+  //we have a string on the display
 
   const buttonFunction = useRef('');
   //this ref we need for reffering to proper ButtonFunction (for focusing on it)
@@ -35,6 +38,7 @@ function App() {
   //after doing math
 
   const handleSetDisplayValue = (num) => {
+    setStringOnDisplay(false);
     if (buttonFunctionTypeFocused) {
       if (num !== '.') {
         setNumber(num);
@@ -54,6 +58,8 @@ function App() {
     } else {
       if (!number.includes('.') && num !== '.' && num !== '0') {
         setNumber(`${(number + num).replace(/^0+/, '')}`);
+        //this condition we use when our Number is "0"
+        //and we try enter num > 0
       } else if (num === '0' && number === '0') {
         setNumber('0');
       } else {
@@ -61,6 +67,19 @@ function App() {
       }
     }
   };
+
+  useEffect(() => {
+    if (number > 99999999) {
+      setNumber('Calculator can process numbers ≤ 99999999');
+      setStoredNumber('');
+      setFunctionType('');
+      buttonFunction.current = '';
+      buttonNumber.current = '';
+      buttonDoMathClicked.current = true;
+      setStringOnDisplay(true);
+      //processing long numbers
+    }
+  }, [number]);
 
   const handleFunctionType = (type) => {
     if (number && !storedNumber) {
@@ -112,17 +131,10 @@ function App() {
         setFunctionType('');
         buttonFunction.current = '';
         buttonNumber.current = '';
+        buttonDoMathClicked.current = true;
+        setStringOnDisplay(true);
         return;
         //processing division by "0"
-      }
-      if (Number(number) > 99999999 || Number(storedNumber) > 99999999) {
-        setNumber('Calculator can process numbers ≤ 99 999 999');
-        setStoredNumber('');
-        setFunctionType('');
-        buttonFunction.current = '';
-        buttonNumber.current = '';
-        return;
-        //processing long numbers
       }
       switch (functionType) {
         case '+':
@@ -201,6 +213,7 @@ function App() {
       value={{
         number,
         storedNumber,
+        stringOnDisplay,
         functionType,
         buttonFunction,
         buttonNumber,
