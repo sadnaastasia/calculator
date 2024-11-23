@@ -28,10 +28,16 @@
   gap: 10px;
 }
 
-.number-CE-pad {
+.number-CE-Negative-number-pad {
   display: grid;
   grid-template-rows: 1fr 4fr;
   padding: 20px;
+  gap: 10px;
+}
+
+.number-CE-Negative-pad {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
   gap: 10px;
 }
 

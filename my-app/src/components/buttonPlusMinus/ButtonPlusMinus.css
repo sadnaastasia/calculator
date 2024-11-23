@@ -1,4 +1,4 @@
-.buttonCE {
+.buttonPlusMinus {
   border: 1px solid purple;
   background-color: #83619e;
   border-radius: 25px;
@@ -7,7 +7,7 @@
   font-weight: 400;
 }
 
-.buttonCE:hover {
+.buttonPlusMinus:hover {
   background-color: #845aa5;
   cursor: pointer;
 }

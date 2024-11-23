@@ -4,6 +4,7 @@ import ButtonNumber from './components/buttonNumber/ButtonNumber.jsx';
 import ButtonFunction from './components/buttonFunction/ButtonFunction.jsx';
 import ButtonDoMath from './components/buttonDoMath/ButtonDoMath.jsx';
 import ButtonDelete from './components/buttonCE/ButtonDelete.jsx';
+import ButtonPlusMinus from './components/buttonPlusMinus/ButtonPlusMinus.jsx';
 import { createContext, useEffect, useState, useRef } from 'react';
 
 export const CalcContext = createContext();
@@ -94,6 +95,14 @@ function App() {
   }, [resultChange]);
   //updating storedNumber every time we make calculations with math operators
   //(without using operator "=")
+
+  const handleToggleNegative = () => {
+    if (number > 0) {
+      setNumber(`-${number}`);
+    } else if (number < 0) {
+      setNumber(`${number.slice(1)}`);
+    }
+  };
 
   const handleDoMath = () => {
     if ((number, storedNumber)) {
@@ -201,6 +210,7 @@ function App() {
         setFunctionType,
         handleSetDisplayValue,
         handleFunctionType,
+        handleToggleNegative,
         handleDoMath,
         handleCEOperation,
         handleCOperation,
@@ -210,8 +220,11 @@ function App() {
         <div className="calculator">
           <Display />
           <div className="pad">
-            <div className="number-CE-pad">
-              <ButtonDelete />
+            <div className="number-CE-Negative-number-pad">
+              <div className="number-CE-Negative-pad">
+                <ButtonDelete />
+                <ButtonPlusMinus />
+              </div>
               <div className="number-pad">
                 <ButtonNumber />
               </div>
