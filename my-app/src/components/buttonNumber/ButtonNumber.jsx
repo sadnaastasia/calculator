@@ -23,9 +23,11 @@ export default function ButtonNumber() {
       return (
         <button
           key={num}
-          onClick={(e) => {
+          onClick={() => {
             handleSetDisplayValue(num);
-            buttonNumber.current = buttonFunction.current;
+            if (buttonFunction.current) {
+              buttonNumber.current = buttonFunction.current;
+            }
           }}
           className="buttonNumber"
         >

@@ -10,23 +10,46 @@ export const CalcContext = createContext();
 
 function App() {
   const [number, setNumber] = useState('0');
+  //number on display
   const [storedNumber, setStoredNumber] = useState('');
-  const [resultChange, setResultChange] = useState('false');
+  //number in memory
+  const [resultChange, setResultChange] = useState(false);
+  //use this state for changing stored number after rendering
+  //when we make calculations with buttonFunctions (without using operator "=")
   const [functionType, setFunctionType] = useState('');
+  //math operator
   const [buttonFunctionTypeFocused, setButtonFunctionTypeFocused] =
     useState(false);
+  //use this state for entering first number after clicking on buttonFunction
 
   const buttonFunction = useRef('');
+  //this ref we need for reffering to proper ButtonFunction (for focusing on it)
   const buttonNumber = useRef('');
+  //this ref we need when we use Button CE (one click on C/CE Button)
+  //and want to toggle between ButtonFunctions
+  //so that calculations are not performed with number "0"
+
+  const buttonDoMathClicked = useRef(false);
+  //use this ref for entering a number from the first digit
+  //after doing math
 
   const handleSetDisplayValue = (num) => {
-    if (storedNumber && functionType && buttonFunctionTypeFocused) {
+    if (buttonFunctionTypeFocused) {
       if (num !== '.') {
         setNumber(num);
       } else {
         setNumber(`${'0' + num}`);
       }
       setButtonFunctionTypeFocused(false);
+      //this condition we use for entering first number after clicking on buttonFunction
+    } else if (buttonDoMathClicked.current) {
+      if (num !== '.') {
+        setNumber(num);
+      } else {
+        setNumber(`${'0' + num}`);
+      }
+      buttonDoMathClicked.current = false;
+      //this condition we use after clicking "="
     } else {
       if (!number.includes('.') && num !== '.' && num !== '0') {
         setNumber(`${(number + num).replace(/^0+/, '')}`);
@@ -44,11 +67,15 @@ function App() {
       setStoredNumber(number);
       setFunctionType(type);
       setButtonFunctionTypeFocused(true);
+      //this condition we need when we still do not have storedNumber
     } else if (number && storedNumber) {
       if (buttonNumber.current === buttonFunction.current) {
         handleDoMath();
         buttonNumber.current = '';
         setResultChange(!resultChange);
+        //this condition we need for not making calculations witn Number "0"
+        //when we toggle between ButtonFunctions after
+        //one click on Button C/CE
       }
       setFunctionType(type);
       setButtonFunctionTypeFocused(true);
@@ -56,6 +83,7 @@ function App() {
   };
 
   const firstRender = useRef(true);
+  //for omitting first render
 
   useEffect(() => {
     if (firstRender.current) {
@@ -64,59 +92,77 @@ function App() {
       setStoredNumber(number);
     }
   }, [resultChange]);
+  //updating storedNumber every time we make calculations with math operators
+  //(without using operator "=")
 
   const handleDoMath = () => {
-    switch (functionType) {
-      case '+':
-        setNumber(
-          `${
-            Math.round(
-              (parseFloat(storedNumber) + parseFloat(number)) * 100000000
-            ) / 100000000
-          }`
-        );
-        break;
+    if ((number, storedNumber)) {
+      if (number === '0' && functionType === '/') {
+        setNumber('Error');
+        setStoredNumber('');
+        setFunctionType('');
+        buttonFunction.current = '';
+        buttonNumber.current = '';
+        return;
+        //processing division by "0"
+      }
+      switch (functionType) {
+        case '+':
+          setNumber(
+            `${
+              Math.round(
+                (parseFloat(storedNumber) + parseFloat(number)) * 100000000
+              ) / 100000000
+            }`
+          );
+          break;
 
-      case '-':
-        setNumber(
-          `${
-            Math.round(
-              (parseFloat(storedNumber) - parseFloat(number)) * 100000000
-            ) / 100000000
-          }`
-        );
-        break;
+        case '-':
+          setNumber(
+            `${
+              Math.round(
+                (parseFloat(storedNumber) - parseFloat(number)) * 100000000
+              ) / 100000000
+            }`
+          );
+          break;
 
-      case '/':
-        setNumber(
-          `${
-            Math.round(
-              (parseFloat(storedNumber) / parseFloat(number)) * 100000000
-            ) / 100000000
-          }`
-        );
-        break;
+        case '/':
+          setNumber(
+            `${
+              Math.round(
+                (parseFloat(storedNumber) / parseFloat(number)) * 100000000
+              ) / 100000000
+            }`
+          );
+          break;
 
-      case '*':
-        setNumber(
-          `${
-            Math.round(
-              parseFloat(storedNumber) * parseFloat(number) * 100000000
-            ) / 100000000
-          }`
-        );
-        break;
+        case '*':
+          setNumber(
+            `${
+              Math.round(
+                parseFloat(storedNumber) * parseFloat(number) * 100000000
+              ) / 100000000
+            }`
+          );
+          break;
 
-      default:
-        break;
+        default:
+          break;
+      }
+      setStoredNumber('');
+      setFunctionType('');
+      buttonFunction.current = '';
+      buttonNumber.current = '';
     }
-    setStoredNumber('');
   };
 
   const handleCEOperation = () => {
     setNumber('0');
     if (buttonFunction.current) {
       buttonNumber.current = '';
+      //we need this for preventing making calculations with Number "0"
+      //while toggling between ButtonFunctions
       buttonFunction.current.focus();
     }
   };
@@ -129,6 +175,7 @@ function App() {
       buttonFunction.current.blur();
     }
     buttonFunction.current = '';
+    buttonNumber.current = '';
   };
 
   return (
@@ -139,6 +186,7 @@ function App() {
         functionType,
         buttonFunction,
         buttonNumber,
+        buttonDoMathClicked,
         setNumber,
         setStoredNumber,
         setFunctionType,
